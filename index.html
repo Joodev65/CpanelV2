@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jose Wibuboy!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="https://files.catbox.moe/s71u1p.jpg" alt="Jose Wibuboy!" class="logo">
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#">Genre</a>
+        <a href="#">Trending</a>
+    </nav>
+
+    <main id="anime-list"></main>
+
+    <script>
+        async function loadAnime() {
+            const response = await fetch('anime.json');  
+            const animeList = await response.json();  
+            const container = document.getElementById('anime-list');
+
+            animeList.forEach(anime => {
+                const animeCard = document.createElement('div');
+                animeCard.className = 'anime-card';
+                animeCard.innerHTML = `
+                    <img src="${anime.image}" alt="${anime.title}">
+                    <h2>${anime.title}</h2>
+                    <p>${anime.description}</p>
+                    <a href="anime.html?id=${anime.id}">Tonton</a>
+                `;
+                container.appendChild(animeCard);
+            });
+        }
+
+        loadAnime();
+    </script>
+</body>
+</html>
