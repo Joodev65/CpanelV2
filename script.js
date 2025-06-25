@@ -1,4 +1,34 @@
 
+// Typing animation
+const texts = ["Auto Panel Creator", "Pterodactyl API", "Joocode Developer", "Server Management"];
+let textIndex = 0;
+let charIndex = 0;
+const typingElement = document.getElementById("typing");
+
+function typeText() {
+  if (charIndex < texts[textIndex].length) {
+    typingElement.textContent += texts[textIndex].charAt(charIndex);
+    charIndex++;
+    setTimeout(typeText, 100);
+  } else {
+    setTimeout(eraseText, 2000);
+  }
+}
+
+function eraseText() {
+  if (charIndex > 0) {
+    typingElement.textContent = texts[textIndex].substring(0, charIndex - 1);
+    charIndex--;
+    setTimeout(eraseText, 50);
+  } else {
+    textIndex = (textIndex + 1) % texts.length;
+    setTimeout(typeText, 500);
+  }
+}
+
+// Start typing animation
+typeText();
+
 document.getElementById("panelForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -20,7 +50,7 @@ document.getElementById("panelForm").addEventListener("submit", async (e) => {
   else if (size === "10gb") ram = 10240;
   else if (size === "unlimited") ram = 0; // unlimited
 
-  resultBox.innerHTML = "⏳ Membuat panel...";
+  resultBox.innerHTML = "â³ Membuat panel...";
 
   try {
     // Gunakan URL relatif untuk menggunakan domain yang sama
@@ -33,19 +63,19 @@ document.getElementById("panelForm").addEventListener("submit", async (e) => {
     const data = await res.json();
 
     if (data.error || data.errors) {
-      resultBox.innerHTML = "❌ Gagal: " + (data.error || data.errors || "Unknown Error");
+      resultBox.innerHTML = "âŒ Gagal: " + (data.error || data.errors || "Unknown Error");
       return;
     }
 
     resultBox.innerHTML = `
-      ✅ Panel berhasil dibuat!<br/><br/>
-      🌐 Domain: ${data.panel_url}<br/>
-      👤 Username: ${data.username}<br/>
-      🔐 Password: ${data.password}<br/>
-      📧 Email: ${data.email}<br/>
-      🆔 Server ID: ${data.server_id}
+      âœ… Panel berhasil dibuat!<br/><br/>
+      ðŸŒ Domain: ${data.panel_url}<br/>
+      ðŸ‘¤ Username: ${data.username}<br/>
+      ðŸ” Password: ${data.password}<br/>
+      ðŸ“§ Email: ${data.email}<br/>
+      ðŸ†” Server ID: ${data.server_id}
     `;
   } catch (err) {
-    resultBox.innerHTML = "❌ Error saat request: " + err.message;
+    resultBox.innerHTML = "âŒ Error saat request: " + err.message;
   }
 });
