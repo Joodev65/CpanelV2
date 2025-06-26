@@ -34,6 +34,11 @@
       border-radius: 12px;
       box-shadow: 0 0 12px rgba(0, 255, 255, 0.15);
     }
+    .logo-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
     header img {
       width: 48px;
       height: 48px;
@@ -48,15 +53,33 @@
     }
     .config {
       display: flex;
-      gap: 8px;
+      gap: 10px;
+      align-items: center;
     }
-    select, button {
+    select {
       background: #2a2a2a;
       color: white;
       border: none;
       padding: 8px 12px;
       border-radius: 8px;
     }
+    .icon-button {
+      background: #2a2a2a;
+      border: none;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .icon-button:hover {
+      background: #333;
+    }
+    .icon-button img {
+      width: 20px;
+      height: 20px;
+      filter: invert(1);
+    }
+
     main {
       flex-grow: 1;
       background: #1b1b1b;
@@ -65,11 +88,13 @@
       overflow-y: auto;
       box-shadow: inset 0 0 10px rgba(0,255,255,0.1);
     }
+
     .messages {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
+
     .message {
       padding: 12px;
       border-radius: 10px;
@@ -77,23 +102,30 @@
       word-wrap: break-word;
       animation: fadeIn 0.3s ease;
     }
+
     .user-message {
       background: linear-gradient(to left, #00f0ff, #8f00ff);
       align-self: flex-end;
+      color: white;
     }
+
     .ai-message {
       background: #2a2a2a;
       align-self: flex-start;
     }
+
     .loading {
       font-style: italic;
       color: #aaa;
     }
+
     form {
       display: flex;
       gap: 10px;
       margin-top: 12px;
+      align-items: center;
     }
+
     textarea {
       flex: 1;
       resize: none;
@@ -103,21 +135,40 @@
       color: white;
       border: none;
     }
+
     button[type="submit"] {
-      background: linear-gradient(45deg, #00f0ff, #8f00ff);
-      color: white;
+      background: #2a2a2a;
       border: none;
-      border-radius: 10px;
-      padding: 10px 18px;
-      font-weight: bold;
+      border-radius: 8px;
+      padding: 8px;
       cursor: pointer;
     }
+
+    button[type="submit"] img {
+      width: 20px;
+      height: 20px;
+      filter: invert(1);
+    }
+
     footer {
       text-align: center;
       font-size: 13px;
       color: #777;
       margin-top: 8px;
     }
+
+    .generated {
+      max-width: 100%;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    .caption {
+      font-size: 12px;
+      margin-top: 4px;
+      color: #bbb;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -127,8 +178,10 @@
 <body>
   <div class="app">
     <header>
-      <img src="https://img1.pixhost.to/images/6755/615340015_imgtmp.jpg" alt="Logo">
-      <h1>YuniAI</h1>
+      <div class="logo-title">
+        <img src="https://img1.pixhost.to/images/6755/615340015_imgtmp.jpg" alt="Logo">
+        <h1>YuniAI</h1>
+      </div>
       <div class="config">
         <select id="tone">
           <option value="default">Biasa</option>
@@ -137,21 +190,26 @@
           <option value="guru">Guru</option>
           <option value="dark">Misterius</option>
         </select>
-        <button id="generateImageBtn">Gambar</button>
-        <button id="clearBtn">Clear</button>
+        <button id="generateImageBtn" class="icon-button" title="Buat Gambar">
+          <img src="https://www.svgrepo.com/show/489894/image.svg" alt="Gambar" />
+        </button>
+        <button id="clearBtn" class="icon-button" title="Hapus Chat">
+          <img src="https://www.svgrepo.com/show/532181/trash.svg" alt="Clear" />
+        </button>
       </div>
     </header>
-
     <main>
       <div id="messages" class="messages"></div>
     </main>
 
     <form id="chatForm">
       <textarea id="userInput" placeholder="Tanyakan sesuatu..." rows="1"></textarea>
-      <button type="submit">Kirim</button>
+      <button type="submit" title="Kirim">
+        <img src="https://www.svgrepo.com/show/510400/send-1.svg" alt="Kirim" />
+      </button>
     </form>
 
-    <footer>Made by Joocode Official | v2 YuniAI</footer>
+    <footer>Made by Joocode Official • v3 YuniAI</footer>
   </div>
 
   <script>
@@ -213,10 +271,10 @@
     });
 
     document.getElementById("generateImageBtn").addEventListener("click", async () => {
-      const prompt = prompt("Deskripsi gambar:");
+      const prompt = prompt("Masukkan deskripsi gambar:");
       if (!prompt) return;
 
-      addMessage("Permintaan gambar: " + prompt, true);
+      addMessage("🖼️ Permintaan gambar: " + prompt, true);
 
       const loadingEl = document.createElement("div");
       loadingEl.className = "message ai-message loading";
@@ -228,7 +286,7 @@
         const res = await fetch("https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2", {
           method: "POST",
           headers: {
-            Authorization: "Bearer hf_isi_token_lu",
+            Authorization: "Bearer hf_ISI_TOKEN_LU",
             "Content-Type": "application/json"
           },
           body: JSON.stringify({ inputs: prompt })
@@ -238,11 +296,11 @@
         const url = URL.createObjectURL(blob);
 
         loadingEl.remove();
+
         const img = document.createElement("img");
         img.src = url;
         img.alt = prompt;
-        img.style.maxWidth = "100%";
-        img.style.borderRadius = "12px";
+        img.className = "generated";
 
         const imgMsg = document.createElement("div");
         imgMsg.className = "message ai-message";
