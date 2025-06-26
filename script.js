@@ -24,8 +24,8 @@ document.querySelector(".config").appendChild(voiceToggle);
 voiceToggle.addEventListener("click", () => {
   voiceEnabled = !voiceEnabled;
   voiceToggle.innerHTML = voiceEnabled
-    ? `<img src="https://www.svgrepo.com/show/525947/speaker-sound.svg" width="20" alt="mute">`
-    : `<img src="https://www.svgrepo.com/show/525945/speaker-volume.svg" width="20" alt="voice">`;
+    ? `<img src="https://img1.pixhost.to/images/6779/615687404_skyzopedia.jpg">`
+    : `<img src="https://img1.pixhost.to/images/6779/615687539_skyzopedia.jpg" width="20" alt="voice">`;
   voiceToggle.title = voiceEnabled ? "Suara Aktif" : "Suara Mati";
 });
 
