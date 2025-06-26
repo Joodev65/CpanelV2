@@ -18,7 +18,7 @@
       height: 100vh;
     }
     .app {
-      max-width: 800px;
+      max-width: 960px;
       margin: auto;
       display: flex;
       flex-direction: column;
@@ -30,51 +30,49 @@
       justify-content: space-between;
       align-items: center;
       background: #1a1a1a;
-      padding: 16px;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0, 255, 255, 0.15);
+      padding: 16px 24px;
+      border-radius: 14px;
+      box-shadow: 0 0 14px rgba(0, 255, 255, 0.15);
     }
-    .logo-title {
+    .logo-section {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
     }
-    header img {
+    .logo-section img {
       width: 48px;
       height: 48px;
       border-radius: 50%;
       border: 2px solid #0ff;
     }
-    header h1 {
+    .logo-section h1 {
+      font-size: 26px;
       background: linear-gradient(to right, #0ff, #f0f);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      font-size: 24px;
     }
     .config {
       display: flex;
       gap: 10px;
       align-items: center;
     }
-    select {
+    .config select,
+    .config button {
       background: #2a2a2a;
       color: white;
       border: none;
-      padding: 8px 12px;
       border-radius: 8px;
-    }
-    .icon-button {
-      background: #2a2a2a;
-      border: none;
-      padding: 8px;
-      border-radius: 8px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: background 0.2s;
     }
-    .icon-button:hover {
+    .config button:hover {
       background: #333;
     }
-    .icon-button img {
+    .config img {
       width: 20px;
       height: 20px;
       filter: invert(1);
@@ -83,8 +81,8 @@
     main {
       flex-grow: 1;
       background: #1b1b1b;
-      padding: 16px;
-      border-radius: 12px;
+      padding: 20px;
+      border-radius: 14px;
       overflow-y: auto;
       box-shadow: inset 0 0 10px rgba(0,255,255,0.1);
     }
@@ -92,14 +90,16 @@
     .messages {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
     .message {
-      padding: 12px;
-      border-radius: 10px;
-      max-width: 75%;
+      padding: 14px;
+      border-radius: 12px;
+      max-width: 80%;
       word-wrap: break-word;
+      line-height: 1.5;
+      font-size: 15px;
       animation: fadeIn 0.3s ease;
     }
 
@@ -129,19 +129,25 @@
     textarea {
       flex: 1;
       resize: none;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 12px;
+      border-radius: 10px;
       background: #2a2a2a;
       color: white;
       border: none;
+      font-size: 14px;
     }
 
     button[type="submit"] {
       background: #2a2a2a;
       border: none;
-      border-radius: 8px;
-      padding: 8px;
+      border-radius: 10px;
+      padding: 10px;
       cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button[type="submit"]:hover {
+      background: #333;
     }
 
     button[type="submit"] img {
@@ -150,23 +156,17 @@
       filter: invert(1);
     }
 
-    footer {
-      text-align: center;
-      font-size: 13px;
-      color: #777;
-      margin-top: 8px;
-    }
-
     .generated {
       max-width: 100%;
       border-radius: 12px;
       margin-top: 10px;
     }
 
-    .caption {
-      font-size: 12px;
-      margin-top: 4px;
-      color: #bbb;
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      margin-top: 10px;
     }
 
     @keyframes fadeIn {
@@ -178,26 +178,27 @@
 <body>
   <div class="app">
     <header>
-      <div class="logo-title">
-        <img src="https://img1.pixhost.to/images/6755/615340015_imgtmp.jpg" alt="Logo">
+      <div class="logo-section">
+        <img src="https://img1.pixhost.to/images/6755/615340015_imgtmp.jpg" alt="Logo YuniAI">
         <h1>YuniAI</h1>
       </div>
       <div class="config">
-        <select id="tone">
+        <select id="tone" title="Gaya Respon">
           <option value="default">Biasa</option>
           <option value="funny">Lucu</option>
           <option value="coding">Coding</option>
           <option value="guru">Guru</option>
           <option value="dark">Misterius</option>
         </select>
-        <button id="generateImageBtn" class="icon-button" title="Buat Gambar">
-          <img src="https://www.svgrepo.com/show/489894/image.svg" alt="Gambar" />
+        <button id="generateImageBtn" title="Buat Gambar">
+          <img src="https://www.svgrepo.com/show/452156/image-picture-gallery.svg" alt="icon">
         </button>
-        <button id="clearBtn" class="icon-button" title="Hapus Chat">
-          <img src="https://www.svgrepo.com/show/532181/trash.svg" alt="Clear" />
+        <button id="clearBtn" title="Bersihkan Chat">
+          <img src="https://www.svgrepo.com/show/532098/delete-document.svg" alt="icon">
         </button>
       </div>
     </header>
+
     <main>
       <div id="messages" class="messages"></div>
     </main>
@@ -205,113 +206,15 @@
     <form id="chatForm">
       <textarea id="userInput" placeholder="Tanyakan sesuatu..." rows="1"></textarea>
       <button type="submit" title="Kirim">
-        <img src="https://www.svgrepo.com/show/510400/send-1.svg" alt="Kirim" />
+        <img src="https://www.svgrepo.com/show/522432/send.svg" alt="icon">
       </button>
     </form>
 
-    <footer>Made by Joocode Official • v3 YuniAI</footer>
+    <footer>
+      Made by <strong>Joocode Official</strong> • YuniAI v3
+    </footer>
   </div>
 
-  <script>
-    const chatForm = document.getElementById("chatForm");
-    const userInput = document.getElementById("userInput");
-    const messages = document.getElementById("messages");
-    const toneSelect = document.getElementById("tone");
-
-    chatForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const text = userInput.value.trim();
-      const tone = toneSelect.value;
-      if (!text) return;
-
-      addMessage(text, true);
-      userInput.value = "";
-
-      const loadingEl = document.createElement("div");
-      loadingEl.className = "message ai-message loading";
-      loadingEl.innerText = "YuniAI sedang mengetik...";
-      messages.appendChild(loadingEl);
-      messages.scrollTop = messages.scrollHeight;
-
-      try {
-        const res = await fetch("https://kaput-incandescent-printer.glitch.me/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, tone: tone })
-        });
-
-        const data = await res.json();
-        loadingEl.remove();
-        addMessage(data.reply || "[!] Tidak ada respon dari AI", false);
-        speak(data.reply || "");
-      } catch (err) {
-        loadingEl.remove();
-        addMessage("[X] Gagal menghubungi YuniAI", false);
-      }
-    });
-
-    function addMessage(content, isUser = false) {
-      const msg = document.createElement("div");
-      msg.className = "message " + (isUser ? "user-message" : "ai-message");
-      msg.innerText = content;
-      messages.appendChild(msg);
-      messages.scrollTop = messages.scrollHeight;
-    }
-
-    function speak(text) {
-      if (!window.speechSynthesis) return;
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'id-ID';
-      utterance.rate = 1;
-      window.speechSynthesis.speak(utterance);
-    }
-
-    document.getElementById("clearBtn").addEventListener("click", () => {
-      messages.innerHTML = "";
-    });
-
-    document.getElementById("generateImageBtn").addEventListener("click", async () => {
-      const prompt = prompt("Masukkan deskripsi gambar:");
-      if (!prompt) return;
-
-      addMessage("🖼️ Permintaan gambar: " + prompt, true);
-
-      const loadingEl = document.createElement("div");
-      loadingEl.className = "message ai-message loading";
-      loadingEl.innerText = "YuniAI sedang membuat gambar...";
-      messages.appendChild(loadingEl);
-      messages.scrollTop = messages.scrollHeight;
-
-      try {
-        const res = await fetch("https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2", {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer hf_ISI_TOKEN_LU",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ inputs: prompt })
-        });
-
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
-
-        loadingEl.remove();
-
-        const img = document.createElement("img");
-        img.src = url;
-        img.alt = prompt;
-        img.className = "generated";
-
-        const imgMsg = document.createElement("div");
-        imgMsg.className = "message ai-message";
-        imgMsg.appendChild(img);
-        messages.appendChild(imgMsg);
-        messages.scrollTop = messages.scrollHeight;
-      } catch (e) {
-        loadingEl.remove();
-        addMessage("[X] Gagal membuat gambar", false);
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
