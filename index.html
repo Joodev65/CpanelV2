@@ -180,42 +180,45 @@
   </div>
 
   <script>
-    const chatForm = document.getElementById("chatForm");
-    const userInput = document.getElementById("userInput");
-    const messages = document.getElementById("messages");
+  const chatForm = document.getElementById("chatForm");
+  const userInput = document.getElementById("userInput");
+  const messages = document.getElementById("messages");
 
-    chatForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const text = userInput.value.trim();
-      if (!text) return;
+  chatForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const text = userInput.value.trim();
+    if (!text) return;
 
-      addMessage(text, true);
-      userInput.value = "";
+    addMessage(text, true);
+    userInput.value = "";
 
-      try {
-        const res = await fetch("https://kaput-incandescent-printer.glitch.me/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text })
-        });
-        const data = await res.json();
-        addMessage(data.reply || "(Tidak ada respons)", false);
-      } catch (err) {
-        addMessage("(Gagal menghubungi YuniAI)", false);
-      }
-    });
+    try {
+      const res = await fetch("https://kaput-incandescent-printer.glitch.me/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text })
+      });
 
-    function addMessage(content, isUser = false) {
-      const msg = document.createElement("div");
-      msg.className = "message" + (isUser ? " user-message" : "");
-      msg.innerText = content;
-      messages.appendChild(msg);
-      messages.scrollTop = messages.scrollHeight;
+      const data = await res.json();
+      console.log("Respon AI:", data);
+      addMessage(data.reply || "(Tidak ada respons)", false);
+    } catch (err) {
+      console.error("Error:", err);
+      addMessage("(Gagal menghubungi YuniAI)", false);
     }
+  });
 
-    document.getElementById("clearBtn").addEventListener("click", () => {
-      messages.innerHTML = "";
-    });
-  </script>
+  function addMessage(content, isUser = false) {
+    const msg = document.createElement("div");
+    msg.className = "message" + (isUser ? " user-message" : "");
+    msg.innerText = content;
+    messages.appendChild(msg);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  document.getElementById("clearBtn").addEventListener("click", () => {
+    messages.innerHTML = "";
+  });
+</script>
 </body>
 </html>
