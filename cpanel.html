@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Joocode Panel</title>
+  <meta name="description" content="Joocode Panel Dashboard - Professional Pterodactyl panel management system">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://img1.pixhost.to/images/6755/615340015_imgtmp.jpg" type="image/jpeg">
+</head>
+<body class="dashboard-page">
+  <!-- Background Shapes -->
+  <div class="bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="shape shape-5"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <div class="header-left">
+        <div class="logo">
+          <img src="https://img1.pixhost.to/images/6755/615340015_imgtmp.jpg" alt="Joocode Logo" class="logo-img">
+          <div class="logo-text">
+            <h1 class="gradient-text">Joocode</h1>
+            <span class="logo-subtitle">Panel Management</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="header-right">
+        <div class="user-info">
+          <div class="user-avatar">
+            <img src="https://img1.pixhost.to/images/6751/615257498_imgtmp.jpg" alt="User Avatar">
+          </div>
+          <div class="user-details">
+            <span class="user-name" id="userName">User</span>
+            <span class="user-role" id="userRole">Member</span>
+          </div>
+          <button class="logout-btn" onclick="logout()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16,17 21,12 16,7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard -->
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-section="create">
+          <div class="nav-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="16"></line>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+          </div>
+          <span class="nav-text">Buat Panel</span>
+        </button>
+        
+        <button class="nav-item" data-section="list">
+          <div class="nav-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+              <line x1="7" y1="8" x2="17" y2="8"></line>
+              <line x1="7" y1="12" x2="17" y2="12"></line>
+              <line x1="7" y1="16" x2="13" y2="16"></line>
+            </svg>
+          </div>
+          <span class="nav-text">Daftar Panel</span>
+        </button>
+        
+        <button class="nav-item admin-only" data-section="createAdmin">
+          <div class="nav-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+              <line x1="12" y1="8" x2="12" y2="14"></line>
+              <line x1="9" y1="11" x2="15" y2="11"></line>
+            </svg>
+          </div>
+          <span class="nav-text">Buat Admin</span>
+        </button>
+        
+        <button class="nav-item admin-only" data-section="listAdmin">
+          <div class="nav-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <span class="nav-text">Daftar Admin</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Create Panel Section -->
+      <section id="create" class="content-section active">
+        <div class="section-header">
+          <h2 class="section-title">Buat Panel Baru</h2>
+          <p class="section-description">Buat panel Pterodactyl dengan spesifikasi yang Anda inginkan</p>
+        </div>
+        
+        <div class="content-card">
+          <form id="panelForm" class="panel-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="size" class="form-label">Pilih Spesifikasi RAM</label>
+                <div class="select-wrapper">
+                  <select id="size" class="form-select" required>
+                    <option value="" disabled selected>Pilih RAM Server</option>
+                    <option value="1gb">1GB RAM (10GB Disk)</option>
+                    <option value="2gb">2GB RAM (20GB Disk)</option>
+                    <option value="3gb">3GB RAM (30GB Disk)</option>
+                    <option value="4gb">4GB RAM (40GB Disk)</option>
+                    <option value="5gb">5GB RAM (50GB Disk)</option>
+                    <option value="6gb">6GB RAM (60GB Disk)</option>
+                    <option value="7gb">7GB RAM (70GB Disk)</option>
+                    <option value="8gb">8GB RAM (80GB Disk)</option>
+                    <option value="9gb">9GB RAM (90GB Disk)</option>
+                    <option value="10gb">10GB RAM (100GB Disk)</option>
+                    <option value="unlimited">Unlimited (RAM & Disk)</option>
+                  </select>
+                  <div class="select-arrow">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="username" class="form-label">Username Panel</label>
+                <div class="input-wrapper">
+                  <input type="text" id="username" class="form-input" placeholder="Masukkan username panel" required>
+                  <div class="input-focus-border"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="form-label">Email Panel</label>
+                <div class="input-wrapper">
+                  <input type="email" id="email" class="form-input" placeholder="Masukkan email panel" required>
+                  <div class="input-focus-border"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="submit-btn">
+                <span class="btn-content">
+                  <span class="btn-text">Buat Panel Sekarang</span>
+                  <div class="btn-loader">
+                    <div class="spinner"></div>
+                  </div>
+                </span>
+                <div class="btn-glow"></div>
+              </button>
+            </div>
+          </form>
+          
+          <div id="result" class="result-container"></div>
+        </div>
+      </section>
+
+      <!-- List Panel Section -->
+      <section id="list" class="content-section">
+        <div class="section-header">
+          <h2 class="section-title">Daftar Panel Aktif</h2>
+          <p class="section-description">Kelola semua panel yang telah dibuat</p>
+        </div>
+        
+        <div class="content-card">
+          <div id="serverList" class="server-grid">
+            <div class="loading-state">
+              <div class="spinner large"></div>
+              <p>Memuat daftar server...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Create Admin Section -->
+      <section id="createAdmin" class="content-section admin-only">
+        <div class="section-header">
+          <h2 class="section-title">Buat Admin Baru</h2>
+          <p class="section-description">Tambahkan admin untuk mengelola panel sistem</p>
+        </div>
+        
+        <div class="content-card">
+          <form id="adminForm" class="admin-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="adminUsername" class="form-label">Username Admin</label>
+                <div class="input-wrapper">
+                  <input type="text" id="adminUsername" class="form-input" placeholder="Masukkan username admin" required>
+                  <div class="input-focus-border"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="adminEmail" class="form-label">Email Admin</label>
+                <div class="input-wrapper">
+                  <input type="email" id="adminEmail" class="form-input" placeholder="Masukkan email admin" required>
+                  <div class="input-focus-border"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="submit-btn">
+                <span class="btn-content">
+                  <span class="btn-text">Buat Admin</span>
+                  <div class="btn-loader">
+                    <div class="spinner"></div>
+                  </div>
+                </span>
+                <div class="btn-glow"></div>
+              </button>
+            </div>
+          </form>
+          
+          <div id="adminResult" class="result-container"></div>
+        </div>
+      </section>
+
+      <!-- List Admin Section -->
+      <section id="listAdmin" class="content-section admin-only">
+        <div class="section-header">
+          <h2 class="section-title">Daftar Admin</h2>
+          <p class="section-description">Kelola semua admin yang memiliki akses sistem</p>
+        </div>
+        
+        <div class="content-card">
+          <div id="adminList" class="admin-grid">
+            <div class="loading-state">
+              <div class="spinner large"></div>
+              <p>Memuat daftar admin...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

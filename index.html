@@ -1,220 +1,170 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>YuniAI</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-    body {
-      background: #0e0e0e;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-    .app {
-      max-width: 960px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 20px;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #1a1a1a;
-      padding: 16px 24px;
-      border-radius: 14px;
-      box-shadow: 0 0 14px rgba(0, 255, 255, 0.15);
-    }
-    .logo-section {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .logo-section img {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 2px solid #0ff;
-    }
-    .logo-section h1 {
-      font-size: 26px;
-      background: linear-gradient(to right, #0ff, #f0f);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .config {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .config select,
-    .config button {
-      background: #2a2a2a;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 8px 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .config button:hover {
-      background: #333;
-    }
-    .config img {
-      width: 20px;
-      height: 20px;
-      filter: invert(1);
-    }
-
-    main {
-      flex-grow: 1;
-      background: #1b1b1b;
-      padding: 20px;
-      border-radius: 14px;
-      overflow-y: auto;
-      box-shadow: inset 0 0 10px rgba(0,255,255,0.1);
-    }
-
-    .messages {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .message {
-      padding: 14px;
-      border-radius: 12px;
-      max-width: 80%;
-      word-wrap: break-word;
-      line-height: 1.5;
-      font-size: 15px;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .user-message {
-      background: linear-gradient(to left, #00f0ff, #8f00ff);
-      align-self: flex-end;
-      color: white;
-    }
-
-    .ai-message {
-      background: #2a2a2a;
-      align-self: flex-start;
-    }
-
-    .loading {
-      font-style: italic;
-      color: #aaa;
-    }
-
-    form {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
-      align-items: center;
-    }
-
-    textarea {
-      flex: 1;
-      resize: none;
-      padding: 12px;
-      border-radius: 10px;
-      background: #2a2a2a;
-      color: white;
-      border: none;
-      font-size: 14px;
-    }
-
-    button[type="submit"] {
-      background: #2a2a2a;
-      border: none;
-      border-radius: 10px;
-      padding: 10px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    button[type="submit"]:hover {
-      background: #333;
-    }
-
-    button[type="submit"] img {
-      width: 20px;
-      height: 20px;
-      filter: invert(1);
-    }
-
-    .generated {
-      max-width: 100%;
-      border-radius: 12px;
-      margin-top: 10px;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 13px;
-      color: #777;
-      margin-top: 10px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Joocode Panel</title>
+  <meta name="description" content="Login to Joocode Panel - Professional Pterodactyl panel management system">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://img1.pixhost.to/images/6755/615340015_imgtmp.jpg" type="image/jpeg">
 </head>
-<body>
-  <div class="app">
-    <header>
-      <div class="logo-section">
-        <img src="https://img1.pixhost.to/images/6755/615340015_imgtmp.jpg" alt="Logo YuniAI">
-        <h1>YuniAI</h1>
-      </div>
-      <div class="config">
-        <select id="tone" title="Gaya Respon">
-          <option value="default">Biasa</option>
-          <option value="funny">Lucu</option>
-          <option value="coding">Coding</option>
-          <option value="guru">Guru</option>
-          <option value="dark">Misterius</option>
-        </select>
-        <button id="generateImageBtn" title="Buat Gambar">
-          <img src="https://img1.pixhost.to/images/6779/615685285_skyzopedia.jpg" alt="icon">
-        </button>
-        <button id="clearBtn" title="Bersihkan Chat">
-          <img src="https://img1.pixhost.to/images/6779/615685874_skyzopedia.jpg" alt="icon">
-        </button>
-      </div>
-    </header>
-
-    <main>
-      <div id="messages" class="messages"></div>
-    </main>
-
-    <form id="chatForm">
-      <textarea id="userInput" placeholder="Tanyakan sesuatu..." rows="1"></textarea>
-      <button type="submit" title="Kirim">
-        <img src="https://img1.pixhost.to/images/6779/615686799_skyzopedia.jpg" alt="icon">
-      </button>
-    </form>
-
-    <footer>
-      Made by <strong>Joocode Official</strong> • YuniAI v3
-    </footer>
+<body class="login-page">
+  <!-- Background Shapes -->
+  <div class="bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="shape shape-5"></div>
   </div>
 
-  <script src="script.js"></script>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="card-header">
+        <div class="logo-section">
+          <img src="https://img1.pixhost.to/images/6755/615340015_imgtmp.jpg" class="avatar" alt="Joocode Logo">
+          <div class="logo-glow"></div>
+        </div>
+        <h1 class="login-title">
+          <span class="gradient-text">Joocode Panel</span>
+        </h1>
+        <p class="login-subtitle">Professional Panel Management System</p>
+      </div>
+
+      <form class="login-form" id="loginForm">
+        <div class="form-group">
+          <label for="name" class="form-label">Nama Lengkap</label>
+          <div class="input-wrapper">
+            <input type="text" id="name" class="form-input" placeholder="Masukkan nama lengkap" required>
+            <div class="input-focus-border"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="password" class="form-input" placeholder="Masukkan password" required>
+            <div class="input-focus-border"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ip" class="form-label">IP Address</label>
+          <div class="input-wrapper">
+            <input type="text" id="ip" class="form-input" placeholder="Masukkan IP address" required>
+            <div class="input-focus-border"></div>
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn">
+          <span class="btn-content">
+            <span class="btn-text">Masuk ke Dashboard</span>
+            <div class="btn-loader">
+              <div class="spinner"></div>
+            </div>
+          </span>
+          <div class="btn-glow"></div>
+        </button>
+      </form>
+
+      <div id="error" class="error-message"></div>
+      
+      <div class="card-footer">
+        <p class="footer-text">© 2025 Joocode Official - Professional Panel Management</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const akun = [
+      {
+        nama: "joodev",
+        password: "joodev123",
+        ip: "1.1.1.1",
+        kategori: "pt"
+      },
+      {
+        nama: "selleracc",
+        password: "reseller-321",
+        ip: "10.10.10.10.10.10.10",
+        kategori: "seller"
+      }
+    ];
+
+    function showError(message) {
+      const errorBox = document.getElementById("error");
+      errorBox.textContent = message;
+      errorBox.classList.add('show');
+      
+      setTimeout(() => {
+        errorBox.classList.remove('show');
+      }, 5000);
+    }
+
+    function showLoader(show = true) {
+      const btn = document.querySelector('.login-btn');
+      const btnText = document.querySelector('.btn-text');
+      const btnLoader = document.querySelector('.btn-loader');
+      
+      if (show) {
+        btn.disabled = true;
+        btn.classList.add('loading');
+        btnText.style.opacity = '0';
+        btnLoader.classList.add('active');
+      } else {
+        btn.disabled = false;
+        btn.classList.remove('loading');
+        btnText.style.opacity = '1';
+        btnLoader.classList.remove('active');
+      }
+    }
+
+    function login() {
+      const nama = document.getElementById("name").value.trim();
+      const pass = document.getElementById("password").value.trim();
+      const ip = document.getElementById("ip").value.trim();
+
+      if (!nama || !pass || !ip) {
+        showError("Semua field harus diisi!");
+        return;
+      }
+
+      showLoader(true);
+
+      setTimeout(() => {
+        const user = akun.find(user =>
+          user.nama === nama &&
+          user.password === pass &&
+          user.ip === ip
+        );
+
+        if (!user) {
+          showLoader(false);
+          showError("Login gagal! Data tidak cocok dengan sistem.");
+          return;
+        }
+
+        sessionStorage.setItem("akses", "true");
+        sessionStorage.setItem("role", user.kategori);
+        sessionStorage.setItem("nama", user.nama);
+
+        window.location.href = "cpanel.html";
+      }, 1500);
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      login();
+    });
+
+    // Background animation
+    document.addEventListener('DOMContentLoaded', function() {
+      const shapes = document.querySelectorAll('.shape');
+      shapes.forEach((shape, index) => {
+        shape.style.animationDelay = `${index * 0.5}s`;
+      });
+    });
+  </script>
 </body>
 </html>
